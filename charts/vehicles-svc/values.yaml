@@ -7,6 +7,7 @@ replicaCount: 2
 
 deployment:
   containerPort: 3000
+
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
   repository: wilsound/diplomado-arquitectura-sabana-grupo3-2025
@@ -66,7 +67,7 @@ service:
 ingress:
   enabled: true
   name: staging-vehicles-svc
-  className: ""
+  className: "nginx"
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
     # kubernetes.io/tls-acme: "true"
@@ -74,7 +75,7 @@ ingress:
     - host: "localhost"
       paths:
         - path: /
-          pathType: ImplementationSpecific
+          pathType: Prefix
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
@@ -138,10 +139,5 @@ redis:
   persistance:
     enabled: true
     size: 2Gi
-# env:
-#   - name: REDIS_HOST
-#     value: {{ .Values.redis.host }}
-#   - name: REDIS_PORT
-#     value: {{ .Values.redis.port }}
-#   - name: REDIS_PASSWORD
-#     value: {{ .Values.redis.password }}
+env:
+  port: 3000

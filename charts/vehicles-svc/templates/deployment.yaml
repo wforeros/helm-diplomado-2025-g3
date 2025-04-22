@@ -51,6 +51,8 @@ spec:
               value: "{{ .Values.redis.port }}"
             - name: REDIS_PASSWORD
               value: "{{ .Values.redis.password }}"
+            - name: PORT
+              value: "{{ .Values.env.port }}"
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
