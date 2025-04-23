@@ -3,7 +3,7 @@ name: Release Helm Chart
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   release:
@@ -25,6 +25,10 @@ jobs:
         run: |
           echo "$HELM_PASSWORD" | helm registry login $HELM_REGISTRY_URL -u "$HELM_USERNAME" --password-stdin
 
+      - name: Download chart dependencies
+        run: |
+          helm dependency update charts/vehicles-svc
+
       - name: Package chart
         run: |
           helm package charts/vehicles-svc --destination packaged
@@ -33,4 +37,4 @@ jobs:
         env:
           HELM_REGISTRY_URL: ghcr.io
         run: |
-          helm push packaged/vehicles-svc-*.tgz oci://$HELM_REGISTRY_URL/<TU_ORG_O_USUARIO>
+          helm push packaged/vehicles-svc-*.tgz oci://$HELM_REGISTRY_URL/santibc/helm-charts
