@@ -28,6 +28,18 @@ Este repositorio está directamente relacionado con las siguientes tecnologías 
 
 Los charts de Helm para cada microservicio se encuentran organizados dentro del directorio `charts/`.
 
+## Loguearse
+
+`helm registry login ghcr.io`
+
+## Como empaquetar en tgz
+
+`helm package charts/vehicles-svc`
+
+## Como pushear con ArgoCD
+
+`helm push vehicles-svc-0.1.0.tgz oci://ghcr.io/santibc/helm-charts`
+
 ## Como instalar el chart manualmente
 
 `helm install <name> charts/vehicles-svc`
