@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
-replicaCount: 2
+replicaCount: 3
 
 deployment:
   containerPort: 3000
@@ -12,9 +12,10 @@ deployment:
 image:
   repository: wilsound/diplomado-arquitectura-sabana-grupo3-2025
   # This sets the pull policy for images.
-  pullPolicy: IfNotPresent
+  # pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "1.0.4"
+  tag: "latest"
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
 # This is to override the chart name.
@@ -55,7 +56,6 @@ securityContext:
 
 # This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
 service:
-  name: staging-vehicles-svc
   # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
   type: ClusterIP
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
@@ -66,7 +66,6 @@ service:
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
   enabled: true
-  name: staging-vehicles-svc
   className: "nginx"
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
@@ -132,7 +131,7 @@ tolerations: []
 affinity: {}
 
 redis:
-  host: "staging-redis-master"
+  host: "vehicles-svc-redis-master" # "staging-redis-master"
   port: "6379"
   auth:
     enabled: false
